@@ -19,11 +19,11 @@ const Lists = ({songs ,totalDuration}) => {
           <List key={item.encodeId} songData={item} />
         ))}
       </div>
-      <span className="flex items-center gap-1 py-[10px] border-t border-[rgba(0,0,0,0.05)] " >
+      <div className="flex items-center gap-1 py-[10px] border-t border-[rgba(0,0,0,0.05)] " >
         <span>{`${songs?.length} bài hát`}</span>
         <BsDot size={24} />
         <span>{moment.utc(totalDuration * 1000).format('HH:mm:ss')}</span>
-      </span>
+      </div>
     </div>
   );
 };

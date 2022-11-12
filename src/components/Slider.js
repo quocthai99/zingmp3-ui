@@ -72,7 +72,6 @@ const Slider = () => {
   }, []);
 
   const handleClickBanner = (item) => {
-    console.log(item);
     if(item.type === 1) {
       dispatch(actions.setCurSongId(item.encodeId))
       dispatch(actions.play(true))

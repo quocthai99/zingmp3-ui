@@ -16,7 +16,7 @@ export const apiGetSong = (sid) =>
     }
   });
 
-export const apigetDetailSong = (sid) =>
+export const apiGetDetailSong = (sid) =>
   new Promise(async (resolve, reject) => {
     try {
       const response = await axios({
