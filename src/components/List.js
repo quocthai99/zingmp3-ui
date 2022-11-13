@@ -13,6 +13,7 @@ const List = ({ songData }) => {
       onClick={() => {
         dispatch(actions.setCurSongId(songData?.encodeId))
         dispatch(actions.play(true))
+        dispatch(actions.playAlbum(true))
       }}
       className="flex justify-between items-center p-[10px] border-t border-[rgba(0,0,0,0.05)] hover:bg-[#DDE4E4] cursor-pointer "
     >

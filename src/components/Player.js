@@ -21,9 +21,10 @@ const {
 var intervalId
 
 const Player = () => {
-  const { curSongId, isPlaying } = useSelector((state) => state.music); // encodeid banner slider and play music default is false
+  const { curSongId, isPlaying, songs } = useSelector((state) => state.music); // encodeid banner slider and play music default is false
   const [songInfo, setSongInfo] = useState(null); // dữ liệu của bài hát được click vào detail
   const [curSeconds, setCurSeconds] = useState(0)
+  const [isShuffle, setIsShuffle] = useState(false)
   // const [source, setSource] = useState(null); // dữ liệu của bài hát được click vào source nhac
   const [audio, setAudio] = useState(new Audio())
   const dispatch = useDispatch()
@@ -43,6 +44,7 @@ const Player = () => {
         audio.pause()
         setAudio(new Audio(res2.data.data["128"]));
       } else {
+        audio.pause()
         setAudio(new Audio())
         dispatch(actions.play(false))
         toast.warn(res2.data.msg)
@@ -88,6 +90,34 @@ const Player = () => {
     setCurSeconds( Math.round(percent * songInfo.duration / 100))
   }
 
+  const handleNextSong = () => {
+    if (songs) {
+      let currentSongIndex
+
+      songs?.forEach((item,index) => {
+        if (item.encodeId === curSongId) currentSongIndex = index
+      })
+      dispatch(actions.setCurSongId(songs[currentSongIndex + 1].encodeId))
+      dispatch(actions.play(true))
+    }
+  }
+
+  const handlePrevSong = () => {
+    if (songs) {
+      let currentSongIndex
+
+      songs?.forEach((item,index) => {
+        if (item.encodeId === curSongId) currentSongIndex = index
+      })
+      dispatch(actions.setCurSongId(songs[currentSongIndex - 1].encodeId))
+      dispatch(actions.play(true))
+    }
+  }
+
+  const handleShuffle = () => {
+
+  }
+
   return (
     <div className="flex items-center px-5 h-full bg-main-400 z-50 ">
       <div className="w-[30%] flex-auto flex items-center gap-2  ">
@@ -117,10 +147,14 @@ const Player = () => {
       {/* Player */}
       <div className="w-[40%] flex-auto flex items-center justify-center gap-2 flex-col">
         <div className="flex items-center gap-8 justify-center ">
-          <span className="hover:text-main-500 cursor-pointer ">
+          <span
+            onClick={() => setIsShuffle(prev => !prev)}
+            className={`cursor-pointer ${isShuffle && `text-purple-600 `}`}>
             <CiShuffle size={24} />
           </span>
-          <span className="hover:text-main-500 cursor-pointer ">
+          <span
+            onClick={handlePrevSong}
+            className={`${!songs ? 'text-gray-500' : 'cursor-pointer '}`}>
             <MdSkipPrevious size={24} />
           </span>
           <span
@@ -133,7 +167,7 @@ const Player = () => {
               <BsPlayCircle size={40} />
             )}
           </span>
-          <span className="hover:text-main-500 cursor-pointer ">
+          <span onClick={handleNextSong} className={`${!songs ? 'text-gray-500' : 'cursor-pointer '}`}>
             <MdSkipNext size={24} />
           </span>
           <span className="hover:text-main-500 cursor-pointer ">
