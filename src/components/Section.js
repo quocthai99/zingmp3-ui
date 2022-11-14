@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 const Section = () => {
   const { friday } = useSelector((state) => state.app);
   const navigate = useNavigate()
-  console.log(friday);
 
   return (
     <div className="mt-12 px-[59px] flex flex-col gap-5 ">

@@ -4,7 +4,7 @@ import {
   MdSkipPrevious,
 } from "react-icons/md";
 import { BiDisc } from "react-icons/bi";
-import { TbChartArcs } from "react-icons/tb";
+import { TbChartArcs, TbRepeatOnce, TbRepeat } from "react-icons/tb";
 import { HiOutlineChartPie } from "react-icons/hi";
 import {
   AiOutlineArrowLeft,
@@ -16,7 +16,7 @@ import { FiSearch } from "react-icons/fi";
 import { BsThreeDots, BsPlayCircle, BsPauseCircle,
 BsMusicNoteBeamed,
 BsDot } from "react-icons/bs";
-import { CiRepeat, CiShuffle } from "react-icons/ci";
+import { CiShuffle } from "react-icons/ci";
 
 const icons = {
   MdOutlineLibraryMusic,
@@ -30,13 +30,14 @@ const icons = {
   AiOutlineHeart,
   BsThreeDots,
   BsPlayCircle,
-  CiRepeat,
   MdSkipPrevious,
   MdSkipNext,
   CiShuffle,
   BsPauseCircle,
   BsMusicNoteBeamed,
-  BsDot
+  BsDot,
+  TbRepeatOnce,
+  TbRepeat
 };
 
 export default icons;

@@ -12,7 +12,8 @@ const {
   BsThreeDots,
   MdSkipNext,
   MdSkipPrevious,
-  CiRepeat,
+  TbRepeat,
+  TbRepeatOnce,
   CiShuffle,
   BsPlayCircle,
   BsPauseCircle,
@@ -25,7 +26,7 @@ const Player = () => {
   const [songInfo, setSongInfo] = useState(null); // dữ liệu của bài hát được click vào detail
   const [curSeconds, setCurSeconds] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
-  const [isRepeat, setIsRepeat] = useState(false);
+  const [repeatMode, setRepeatMode] = useState(0);
   // const [source, setSource] = useState(null); // dữ liệu của bài hát được click vào source nhac
   const [audio, setAudio] = useState(new Audio());
   const dispatch = useDispatch();
@@ -77,8 +78,8 @@ const Player = () => {
     const handleEnded = () => {
       if (isShuffle) {
         handleShuffle();
-      } else if (isRepeat) {
-        handleNextSong();
+      } else if (repeatMode) {
+       repeatMode === 1 ? handleRepeatOne() : handleNextSong();
       } else {
         audio.pause()
         dispatch(actions.play(false))
@@ -89,7 +90,7 @@ const Player = () => {
     return () => {
       audio.addEventListener("ended", handleEnded);
     };
-  }, [audio, isShuffle, isRepeat]);
+  }, [audio, isShuffle, repeatMode]);
 
   const handleTogglePlayMusic = () => {
     if (isPlaying) {
@@ -134,6 +135,10 @@ const Player = () => {
       dispatch(actions.play(true));
     }
   };
+
+  const handleRepeatOne = () => {
+    audio.play()
+  }
 
   const handleShuffle = () => {
     setIsShuffle((prev) => !prev);
@@ -200,10 +205,10 @@ const Player = () => {
             <MdSkipNext size={24} />
           </span>
           <span
-            onClick={() => setIsRepeat((prev) => !prev)}
-            className={`cursor-pointer ${isRepeat && `text-purple-600 `}`}
+            onClick={() => setRepeatMode((prev) => prev === 2 ? 0 : prev + 1)}
+            className={`cursor-pointer ${repeatMode && `text-purple-600 `}`}
           >
-            <CiRepeat size={24} />
+            {repeatMode === 1 ? <TbRepeatOnce size={24} /> : <TbRepeat size={24} />}
           </span>
         </div>
 
