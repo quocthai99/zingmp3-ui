@@ -16,11 +16,13 @@ const Album = () => {
   const { isPlaying } = useSelector((state) => state.music); // encodeid banner slider and play music default is false
   const { pid } = useParams();
 
-  const [playlistData, setPlaylistData] = useState(null);
+  const [playlistData, setPlaylistData] = useState({});
 
   useEffect(() => {
     const fetchDetailPlaylist = async () => {
+      dispatch(actions.loading(true))
       const response = await apis.apiGetDetailPlaylist(pid);
+      dispatch(actions.loading(false))
       if (response?.data.err === 0) {
         setPlaylistData(response?.data?.data);
         dispatch(actions.setPlaylist(response?.data?.data?.song?.items));
@@ -31,7 +33,7 @@ const Album = () => {
   }, [pid]);
 
   return (
-    <div className="py-5 flex gap-8 w-full h-full px-[59px] ">
+    <div className="py-5 flex gap-8 w-full h-full px-[59px] animate-scale-up-center ">
       {/* Thumbnail Playlist */}
       <div className="flex-none w-1/4 flex flex-col items-center gap-2 ">
         <div className="w-full relative overflow-hidden">

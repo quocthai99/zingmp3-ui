@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
 import { Slider, Section } from "../../components";
 import * as actions from "../../store/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
+  const { friday, newEveryday, top100, xone, newMusic } = useSelector((state) => state.app);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -13,9 +15,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="overflow-y-auto w-full">
+    <div className="overflow-y-auto w-full mb-40">
       <Slider />
-      <Section />
+      <Section data={friday} />
+      <Section data={newEveryday} />
+      <Section data={top100} />
+      <Section data={xone} />
+      <Section data={newMusic} />
     </div>
   );
 };
