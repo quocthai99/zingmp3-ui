@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import * as apis from "../apis";
 import * as actions from "../store/actions";
 import icons from "../ultis/icons";
+import { LoadingSong } from "./";
 
 const {
   AiOutlineHeart,
@@ -17,6 +18,10 @@ const {
   CiShuffle,
   BsPlayCircle,
   BsPauseCircle,
+  BsMusicNoteList,
+  SlVolume1,
+  SlVolume2,
+  SlVolumeOff,
 } = icons;
 
 var intervalId;
@@ -27,6 +32,8 @@ const Player = () => {
   const [curSeconds, setCurSeconds] = useState(0);
   const [isShuffle, setIsShuffle] = useState(false);
   const [repeatMode, setRepeatMode] = useState(0);
+  const [isLoadedSource, setIsLoadedSource] = useState(true);
+  const [volume, setVolume] = useState(100);
   // const [source, setSource] = useState(null); // dữ liệu của bài hát được click vào source nhac
   const [audio, setAudio] = useState(new Audio());
   const dispatch = useDispatch();
@@ -35,10 +42,12 @@ const Player = () => {
 
   useEffect(() => {
     const fetchSong = async () => {
+      setIsLoadedSource(false);
       const [res1, res2] = await Promise.all([
         apis.apiGetDetailSong(curSongId),
         apis.apiGetSong(curSongId),
       ]);
+      setIsLoadedSource(true);
       if (res1.data.err === 0) {
         setSongInfo(res1.data.data);
       }
@@ -79,10 +88,10 @@ const Player = () => {
       if (isShuffle) {
         handleShuffle();
       } else if (repeatMode) {
-       repeatMode === 1 ? handleRepeatOne() : handleNextSong();
+        repeatMode === 1 ? handleRepeatOne() : handleNextSong();
       } else {
-        audio.pause()
-        dispatch(actions.play(false))
+        audio.pause();
+        dispatch(actions.play(false));
       }
     };
     audio.addEventListener("ended", handleEnded);
@@ -91,6 +100,10 @@ const Player = () => {
       audio.addEventListener("ended", handleEnded);
     };
   }, [audio, isShuffle, repeatMode]);
+
+  useEffect(() => {
+    audio.volume = volume / 100;
+  }, [volume])
 
   const handleTogglePlayMusic = () => {
     if (isPlaying) {
@@ -137,8 +150,8 @@ const Player = () => {
   };
 
   const handleRepeatOne = () => {
-    audio.play()
-  }
+    audio.play();
+  };
 
   const handleShuffle = () => {
     setIsShuffle((prev) => !prev);
@@ -192,7 +205,9 @@ const Player = () => {
             onClick={handleTogglePlayMusic}
             className="hover:text-main-500 cursor-pointer "
           >
-            {isPlaying ? (
+            {!isLoadedSource ? (
+              <LoadingSong />
+            ) : isPlaying ? (
               <BsPauseCircle size={40} />
             ) : (
               <BsPlayCircle size={40} />
@@ -205,10 +220,14 @@ const Player = () => {
             <MdSkipNext size={24} />
           </span>
           <span
-            onClick={() => setRepeatMode((prev) => prev === 2 ? 0 : prev + 1)}
+            onClick={() => setRepeatMode((prev) => (prev === 2 ? 0 : prev + 1))}
             className={`cursor-pointer ${repeatMode && `text-purple-600 `}`}
           >
-            {repeatMode === 1 ? <TbRepeatOnce size={24} /> : <TbRepeat size={24} />}
+            {repeatMode === 1 ? (
+              <TbRepeatOnce size={24} />
+            ) : (
+              <TbRepeat size={24} />
+            )}
           </span>
         </div>
 
@@ -229,7 +248,22 @@ const Player = () => {
       </div>
 
       {/* Volume */}
-      <div className="w-[30%] flex-auto ">Volume</div>
+      <div className="w-[30%] flex-auto flex items-center justify-end gap-4 ">
+        <div className="flex items-center gap-2" >
+          <span onClick={() => setVolume(prev => +prev === 0 ? 70 : 0)}>{+volume >= 50 ? <SlVolume2 /> : +volume === 0 ? <SlVolumeOff /> : <SlVolume1 /> }</span>
+          <input
+            type="range"
+            step={1}
+            min={0}
+            max={100}
+            value={volume}
+            onChange={(e) => setVolume(e.target.value)}
+          />
+        </div>
+        <span className="p-1 rounded-sm cursor-pointer bg-main-500 opacity-90 hover:opacity-100 ">
+          <BsMusicNoteList size={20} />{" "}
+        </span>
+      </div>
     </div>
   );
 };

@@ -13,7 +13,7 @@ const { BsPlayCircle } = icons;
 
 const Album = () => {
   const dispatch = useDispatch();
-  const { curSongId, isPlaying, songs } = useSelector((state) => state.music); // encodeid banner slider and play music default is false
+  const { isPlaying } = useSelector((state) => state.music); // encodeid banner slider and play music default is false
   const { pid } = useParams();
 
   const [playlistData, setPlaylistData] = useState(null);
@@ -44,7 +44,11 @@ const Album = () => {
                 : "rounded-md animate-rotate-center-pause"
             } shadow-md`}
           />
-          <div className={`flex items-center justify-center absolute top-0 bottom-0 left-0 right-0 text-white hover:bg-overlay-30 ${isPlaying && 'rounded-full'}`}>
+          <div
+            className={`flex items-center justify-center absolute top-0 bottom-0 left-0 right-0 text-white hover:bg-overlay-30 ${
+              isPlaying && "rounded-full"
+            }`}
+          >
             {isPlaying ? (
               <span className="p-2 border border-white rounded-full">
                 <AudioLoading />

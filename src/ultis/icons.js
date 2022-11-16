@@ -13,10 +13,16 @@ import {
   AiOutlineHeart,
 } from "react-icons/ai";
 import { FiSearch } from "react-icons/fi";
-import { BsThreeDots, BsPlayCircle, BsPauseCircle,
-BsMusicNoteBeamed,
-BsDot } from "react-icons/bs";
+import {
+  BsThreeDots,
+  BsPlayCircle,
+  BsPauseCircle,
+  BsMusicNoteBeamed,
+  BsMusicNoteList,
+  BsDot,
+} from "react-icons/bs";
 import { CiShuffle } from "react-icons/ci";
+import { SlVolume1, SlVolume2, SlVolumeOff } from "react-icons/sl";
 
 const icons = {
   MdOutlineLibraryMusic,
@@ -37,7 +43,11 @@ const icons = {
   BsMusicNoteBeamed,
   BsDot,
   TbRepeatOnce,
-  TbRepeat
+  TbRepeat,
+  BsMusicNoteList,
+  SlVolume1,
+  SlVolume2,
+  SlVolumeOff,
 };
 
 export default icons;
