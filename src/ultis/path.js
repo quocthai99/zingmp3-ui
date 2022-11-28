@@ -6,6 +6,7 @@ const path = {
     MY_MUSIC: 'mymusic',
     ALBUM__TITLE__PID: 'album/:title/:pid',
     PLAYLIST__TITLE__PID: 'playlist/:title/:pid',
+    ZING_CHART: 'zing-chart'
 }
 
 export default path

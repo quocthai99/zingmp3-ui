@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import moment from "moment";
 import { Scrollbars } from "react-custom-scrollbars-2";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,6 +15,7 @@ const Album = () => {
   const dispatch = useDispatch();
   const { isPlaying } = useSelector((state) => state.music); // encodeid banner slider and play music default is false
   const { pid } = useParams();
+  const location = useLocation()
 
   const [playlistData, setPlaylistData] = useState({});
 
@@ -31,6 +32,14 @@ const Album = () => {
 
     fetchDetailPlaylist();
   }, [pid]);
+
+  useEffect(() => {
+    if (location?.state?.playAlbum) {
+      const randomSong = Math.round(Math.random() * playlistData?.song?.items?.length) - 1
+      dispatch(actions.setCurSongId(playlistData?.song?.items[randomSong]?.encodeId))
+      dispatch(actions.play(true))
+    }
+  }, [pid, playlistData])
 
   return (
     <div className="py-5 flex gap-8 w-full h-full px-[59px] animate-scale-up-center ">

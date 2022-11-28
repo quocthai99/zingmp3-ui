@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 const Public = () => {
   const { isLoading } = useSelector((state) => state.app);
 
-  
   return (
     <div className="w-full relative h-screen flex bg-main-300 flex-col ">
       <div className="flex w-full h-full flex-auto ">
@@ -32,15 +31,15 @@ const Public = () => {
           </div>
 
           <div className="flex-auto w-full">
-            <Scrollbars style={{ width: "100%", height: "100%" }}>
+            <Scrollbars autoHide style={{ width: "100%", height: "100%" }}>
               <Outlet />
             </Scrollbars>
           </div>
         </div>
 
-        <div className="w-[329px] hidden 1600:flex flex-none animate-slide-left ">
+        {/* <div className="w-[250px] flex flex-none animate-slide-left ">
           <SidebarRight />
-        </div>
+        </div> */}
       </div>
       <div className="flex-none z-50 fixed bottom-0 left-0 right-0 h-[90px]  ">
         <Player />

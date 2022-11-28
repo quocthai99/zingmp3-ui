@@ -1,9 +1,8 @@
 import React, { memo } from "react";
-import { useNavigate } from "react-router-dom";
+
+import { SectionItem } from "./";
 
 const Section = ({ data }) => {
-  const navigate = useNavigate();
-
   return (
     <div className="mt-12 px-[59px] flex flex-col gap-5 ">
       <div className="flex items-center justify-between ">
@@ -16,31 +15,15 @@ const Section = ({ data }) => {
           ?.filter((item, index) => index <= 4)
           ?.map((item) => {
             return (
-              <div
+              <SectionItem
                 key={item.encodeId}
-                onClick={() => {
-                  navigate(item?.link?.split(".")[0]);
-                }}
-                className="flex flex-col flex-auto w-1/5 text-sm gap-3 cursor-pointer "
-              >
-                <img
-                  src={item.thumbnailM}
-                  alt="avatar"
-                  className="w-full object-cover rounded-lg "
-                />
-                <div className="flex flex-col">
-                  <span className="font-semibold">{item.title}</span>
-                  {data?.sectionId === "h100" ? (
-                    <span>{item.artistsNames}</span>
-                  ) : (
-                    <span>
-                      {item.sortDescription.length >= 40
-                        ? `${item.sortDescription?.slice(0, 40)}...`
-                        : item.sortDescription}
-                    </span>
-                  )}
-                </div>
-              </div>
+                data={data}
+                title={item.title}
+                link={item.link}
+                sortDescription={item.sortDescription}
+                thumbnailM={item.thumbnailM}
+                artistsNames={item.artistsNames}
+              />
             );
           })}
       </div>

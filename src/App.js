@@ -3,7 +3,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import path from "./ultis/path";
 
-import { Home, Login, Public, Personal, Album } from "./containers/public";
+import { Home, Login, Public, Personal, Album, ZingChart } from "./containers/public";
 
 function App() {
   return (
@@ -16,6 +16,7 @@ function App() {
             <Route path={path.MY_MUSIC} element={<Personal />} />
             <Route path={path.ALBUM__TITLE__PID} element={<Album />} />
             <Route path={path.PLAYLIST__TITLE__PID} element={<Album />} />
+            <Route path={path.ZING_CHART} element={<ZingChart />} />
 
             <Route path={path.STAR} element={<Home />} />
           </Route>
